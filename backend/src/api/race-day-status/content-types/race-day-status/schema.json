@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "race_day_statuses",
+  "info": {
+    "singularName": "race-day-status",
+    "pluralName": "race-day-statuses",
+    "displayName": "raceDayStatus"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Status": {
+      "type": "enumeration",
+      "enum": [
+        "Requested",
+        "Paid",
+        "OnWaitList"
+      ]
+    }
+  }
+}

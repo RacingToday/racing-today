@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "raca_days",
+  "info": {
+    "singularName": "raca-day",
+    "pluralName": "raca-days",
+    "displayName": "RacaDay",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "EventDescription": {
+      "type": "string"
+    },
+    "Messages": {
+      "type": "string"
+    },
+    "RaceDate": {
+      "type": "date"
+    },
+    "StartTime": {
+      "type": "time"
+    },
+    "EndTime": {
+      "type": "time"
+    },
+    "Price": {
+      "type": "decimal"
+    },
+    "organizer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::organizer.organizer"
+    }
+  }
+}

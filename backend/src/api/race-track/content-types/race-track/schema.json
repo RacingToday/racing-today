@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "race_tracks",
+  "info": {
+    "singularName": "race-track",
+    "pluralName": "race-tracks",
+    "displayName": "RaceTrack",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "TrackDescription": {
+      "type": "string"
+    },
+    "Location": {
+      "type": "string"
+    },
+    "TrackName": {
+      "type": "string"
+    }
+  }
+}
