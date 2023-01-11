@@ -27,8 +27,8 @@ import {
   Stack,
   CloseButton,
 } from "@chakra-ui/react";
+import { createNewUser, getMyUser } from "../lib/helperFunctions";
 import React from "react";
-
 function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -38,29 +38,53 @@ function Header() {
   const [registerPassword, setRegisterPassword] = React.useState("");
   const [validEmailError, setValidEmailError] = React.useState(false);
   const [validPasswordError, setValidPasswordError] = React.useState(false);
+  const [validAccountCreation, setValidAccountCreation] = React.useState(false);
   const handleLogin = () => {
     // TODO - add login logic for authentication
     console.log(loginEmail, loginPassword);
   };
 
-  const handleAccountCreation = () => {
+  const handleAccountCreation = async () => {
     if (!registerEmail.includes("@") || !registerEmail.includes(".")) {
       setValidEmailError(true);
     }
     if (registerPassword.length < 8) {
       setValidPasswordError(true);
     } else {
-      // TODO - add logic for account creation
-      console.log(registerEmail, registerPassword);
+      const newUser = await createNewUser(registerEmail, registerPassword);
+      const { jwt }: any = newUser;
+      const { user }: any = newUser;
+
+      localStorage.setItem("jwt", jwt);
+
+      setValidAccountCreation(true);
+
+      onClose();
     }
+
+    return;
   };
 
   return (
     <Flex flex={1} h={"5rem"} color={"#fff"} bg={"#000"}>
+      {validAccountCreation && (
+        <Alert mb={2} variant="solid" status="success">
+          <AlertIcon />
+          <AlertDescription>
+            Welcome to RacingToday - you have now created your account and can
+            start browsing tracks
+          </AlertDescription>
+          <CloseButton
+            position="absolute"
+            right="8px"
+            top="8px"
+            onClick={() => setValidAccountCreation(false)}
+          />
+        </Alert>
+      )}
       <Button colorScheme="blue" onClick={onOpen}>
         Login or Register
       </Button>
-
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
