@@ -27,7 +27,7 @@ import {
   Stack,
   CloseButton,
 } from "@chakra-ui/react";
-import { createNewUser, getMyUser } from "../lib/helperFunctions";
+import { createNewUser, getMyUser, loginUser } from "../lib/helperFunctions";
 import React from "react";
 function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -39,9 +39,45 @@ function Header() {
   const [validEmailError, setValidEmailError] = React.useState(false);
   const [validPasswordError, setValidPasswordError] = React.useState(false);
   const [validAccountCreation, setValidAccountCreation] = React.useState(false);
-  const handleLogin = () => {
-    // TODO - add login logic for authentication
-    console.log(loginEmail, loginPassword);
+  const [validLogin, setValidLogin] = React.useState(false);
+  const [loginOrShowUserData, setLoginOrShowUserData] = React.useState(
+    <Button colorScheme="blue" onClick={onOpen}>
+      Login or Register
+    </Button>
+  );
+
+  React.useEffect(() => {
+    const checkForUser = async () => {
+      if (localStorage.getItem("jwt") !== null) {
+        const jwt = localStorage.getItem("jwt");
+        if (typeof jwt === "string" && jwt.length > 0) {
+          const user = await getMyUser(jwt);
+
+          setLoginOrShowUserData(
+            <Stack>
+              <Text>Welcome {user.username}</Text>
+              <Button colorScheme="blue" onClick={onOpen}>
+                Logout
+              </Button>
+            </Stack>
+          );
+        }
+      }
+      return;
+    };
+
+    checkForUser();
+  }, []);
+
+  const handleLogin = async () => {
+    const login = await loginUser(loginEmail, loginPassword);
+    const { jwt }: any = login;
+    if (jwt === typeof String) {
+      localStorage.setItem("jwt", jwt);
+      setValidLogin(true);
+      onClose();
+    }
+    return;
   };
 
   const handleAccountCreation = async () => {
@@ -82,9 +118,8 @@ function Header() {
           />
         </Alert>
       )}
-      <Button colorScheme="blue" onClick={onOpen}>
-        Login or Register
-      </Button>
+
+      {loginOrShowUserData}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
