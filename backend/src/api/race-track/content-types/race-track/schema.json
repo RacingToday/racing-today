@@ -20,6 +20,17 @@
     },
     "TrackName": {
       "type": "string"
+    },
+    "raca_days": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::raca-day.raca-day"
+    },
+    "raca_day": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::raca-day.raca-day",
+      "inversedBy": "race_track"
     }
   }
 }

@@ -56,9 +56,6 @@ function Header() {
           setLoginOrShowUserData(
             <Stack>
               <Text>Welcome {user.username}</Text>
-              <Button colorScheme="blue" onClick={onOpen}>
-                Logout
-              </Button>
             </Stack>
           );
         }
@@ -72,10 +69,18 @@ function Header() {
   const handleLogin = async () => {
     const login = await loginUser(loginEmail, loginPassword);
     const { jwt }: any = login;
-    if (jwt === typeof String) {
+    if (typeof jwt === "string" && jwt.length > 0) {
       localStorage.setItem("jwt", jwt);
+      console.log(jwt);
+      const user = await getMyUser(jwt);
       setValidLogin(true);
       onClose();
+      setLoginOrShowUserData(
+        <Stack>
+          <Text>Welcome {user.username}</Text>
+        </Stack>
+      );
+      return;
     }
     return;
   };
@@ -89,7 +94,6 @@ function Header() {
     } else {
       const newUser = await createNewUser(registerEmail, registerPassword);
       const { jwt }: any = newUser;
-      const { user }: any = newUser;
 
       localStorage.setItem("jwt", jwt);
 

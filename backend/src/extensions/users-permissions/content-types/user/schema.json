@@ -65,6 +65,11 @@
     },
     "RandomString": {
       "type": "string"
+    },
+    "raca_days": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::raca-day.raca-day"
     }
   }
 }

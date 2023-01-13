@@ -29,6 +29,18 @@
     },
     "Price": {
       "type": "decimal"
+    },
+    "race_track": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::race-track.race-track",
+      "inversedBy": "raca_day"
+    },
+    "RaceDayCapacity": {
+      "type": "integer"
+    },
+    "RaceDayParticipants": {
+      "type": "integer"
     }
   }
 }
