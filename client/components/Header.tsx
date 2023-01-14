@@ -30,13 +30,9 @@ import {
 } from "@chakra-ui/react";
 import { createNewUser, getMyUser, loginUser } from "../lib/helperFunctions";
 import React, { useState } from "react";
+import CreateRaceDay from "./CreateRaceDay";
 function Header() {
   const { isOpen: isOpen, onOpen: onOpen, onClose: onClose } = useDisclosure();
-  const {
-    isOpen: isOpen1,
-    onOpen: onOpen1,
-    onClose: onClose1,
-  } = useDisclosure();
 
   const [loginEmail, setLoginEmail] = React.useState("");
   const [loginPassword, setLoginPassword] = React.useState("");
@@ -45,6 +41,7 @@ function Header() {
   const [validEmailError, setValidEmailError] = React.useState(false);
   const [validPasswordError, setValidPasswordError] = React.useState(false);
   const [validAccountCreation, setValidAccountCreation] = React.useState(false);
+  const [validLogin, setValidLogin] = React.useState(false);
 
   const [loginOrShowUserData, setLoginOrShowUserData] = React.useState(
     <Button colorScheme="blue" onClick={onOpen}>
@@ -71,9 +68,7 @@ function Header() {
                 flexWrap={"wrap"}
                 flexDir={"row"}
               >
-                <Button size={"sm"} colorScheme={"blue"}>
-                  Create Raceday
-                </Button>
+                <CreateRaceDay />
 
                 <Button size={"sm"} colorScheme={"blue"}>
                   Find Racedays
