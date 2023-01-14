@@ -1,7 +1,7 @@
 /** @format */
 
 import { gql, useQuery } from "@apollo/client";
-import { Box, Flex, List, ListItem } from "@chakra-ui/react";
+import { Box, Button, Flex, List, ListItem } from "@chakra-ui/react";
 import React from "react";
 
 /** @format */
@@ -10,25 +10,42 @@ function RaceDayList() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error </p>;
   const arrayOfRacedays = data.racaDays.data;
-  console.log(arrayOfRacedays);
   return (
     <>
-      <h2>RaceDays</h2>
-      <Flex flexDir="column">
+      <h1
+        style={{
+          margin: "1em 1.5em",
+          fontSize: "1.5em",
+        }}
+      >
+        RaceDays
+      </h1>
+      <Flex flexDir="column" className="mapOfRaceDays">
         {arrayOfRacedays.map((raceday: any) => (
           <Flex
-            minW={"30em"}
-            minH={"10em"}
-            bgColor={"red"}
+            borderRadius={"10px"}
+            minH={"6em"}
             flexDir={"row"}
+            p={"0em 2.2em"}
             justifyContent={"space-between"}
-            m={"2em"}
+            m={"0.7em 2em"}
             flex={1}
+            border={"1px solid black"}
             key={raceday.attributes.RaceDate}
           >
-            <Box>{raceday.attributes.RaceDate}</Box>
-            <Box>{raceday.attributes.EventDescription} </Box>
-            <Box>{raceday.attributes.RaceDayCapacity}</Box>
+            <Box textAlign={"center"} alignSelf="center">
+              {raceday.attributes.RaceDate}
+            </Box>
+            <Box alignSelf={"center"}>
+              {raceday.attributes.EventDescription}{" "}
+            </Box>
+            <Box alignSelf={"center"}>{raceday.attributes.RaceDayCapacity}</Box>
+            <Box alignSelf={"center"} textAlign="center">
+              Prices From {raceday.attributes.Price}
+            </Box>
+            <Box alignSelf={"center"}>
+              <Button colorScheme={"blue"}>Book</Button>
+            </Box>
           </Flex>
         ))}
       </Flex>
@@ -46,6 +63,7 @@ const GET_RACEDAYS = gql`
           RaceDate
           EventDescription
           RaceDayCapacity
+          Price
         }
       }
     }

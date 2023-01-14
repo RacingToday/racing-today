@@ -106,7 +106,16 @@ function Header() {
   };
 
   return (
-    <Flex flex={1} h={"5rem"} color={"#fff"} bg={"#000"}>
+    <Flex
+      pt={"1em"}
+      pr={"1em"}
+      flex={1}
+      h={"5rem"}
+      flexDir="row-reverse"
+      color={"#fff"}
+      bg={"#000"}
+    >
+      {loginOrShowUserData}
       {validAccountCreation && (
         <Alert mb={2} variant="solid" status="success">
           <AlertIcon />
@@ -123,7 +132,6 @@ function Header() {
         </Alert>
       )}
 
-      {loginOrShowUserData}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
