@@ -26,11 +26,17 @@ import {
   AlertTitle,
   Stack,
   CloseButton,
+  Box,
 } from "@chakra-ui/react";
 import { createNewUser, getMyUser, loginUser } from "../lib/helperFunctions";
-import React from "react";
+import React, { useState } from "react";
 function Header() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isOpen, onOpen: onOpen, onClose: onClose } = useDisclosure();
+  const {
+    isOpen: isOpen1,
+    onOpen: onOpen1,
+    onClose: onClose1,
+  } = useDisclosure();
 
   const [loginEmail, setLoginEmail] = React.useState("");
   const [loginPassword, setLoginPassword] = React.useState("");
@@ -39,7 +45,7 @@ function Header() {
   const [validEmailError, setValidEmailError] = React.useState(false);
   const [validPasswordError, setValidPasswordError] = React.useState(false);
   const [validAccountCreation, setValidAccountCreation] = React.useState(false);
-  const [validLogin, setValidLogin] = React.useState(false);
+
   const [loginOrShowUserData, setLoginOrShowUserData] = React.useState(
     <Button colorScheme="blue" onClick={onOpen}>
       Login or Register
@@ -54,9 +60,30 @@ function Header() {
           const user = await getMyUser(jwt);
 
           setLoginOrShowUserData(
-            <Stack>
-              <Text>Welcome {user.username}</Text>
-            </Stack>
+            <Flex p={"0.5em 2em"} flex={1} flexWrap={"wrap"} flexDir={"row"}>
+              {" "}
+              <Flex
+                gap={"1em"}
+                justifySelf={"flex-end"}
+                justifyContent={"flex-end"}
+                flex={1}
+                pt={"0.5em"}
+                flexWrap={"wrap"}
+                flexDir={"row"}
+              >
+                <Button size={"sm"} colorScheme={"blue"}>
+                  Create Raceday
+                </Button>
+
+                <Button size={"sm"} colorScheme={"blue"}>
+                  Find Racedays
+                </Button>
+
+                <Button size={"sm"} colorScheme={"blue"}>
+                  My Racedays
+                </Button>
+              </Flex>
+            </Flex>
           );
         }
       }
@@ -113,9 +140,14 @@ function Header() {
       h={"5rem"}
       flexDir="row-reverse"
       color={"#fff"}
+      minW={"100%"}
+      maxW={"100%"}
       bg={"#000"}
     >
       {loginOrShowUserData}
+      <Box className="SiteName" m={"0em 2em"}>
+        <Text fontSize={"2xl"}>RacingToday</Text>
+      </Box>
       {validAccountCreation && (
         <Alert mb={2} variant="solid" status="success">
           <AlertIcon />
@@ -251,3 +283,5 @@ function Header() {
 }
 
 export default Header;
+
+// New GrapthQL query to get create new user

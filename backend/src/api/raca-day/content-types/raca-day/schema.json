@@ -41,6 +41,12 @@
     },
     "RaceDayParticipants": {
       "type": "integer"
+    },
+    "organizer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::organizer.organizer",
+      "inversedBy": "raca_day"
     }
   }
 }

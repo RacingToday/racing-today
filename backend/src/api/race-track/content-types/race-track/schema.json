@@ -30,7 +30,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::raca-day.raca-day",
-      "inversedBy": "race_track"
+      "mappedBy": "race_track"
     }
   }
 }
