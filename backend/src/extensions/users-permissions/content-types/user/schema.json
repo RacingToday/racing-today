@@ -68,14 +68,9 @@
     },
     "raca_days": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::raca-day.raca-day"
-    },
-    "organizer": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::organizer.organizer",
-      "inversedBy": "user"
+      "relation": "manyToMany",
+      "target": "api::raca-day.raca-day",
+      "mappedBy": "users"
     }
   }
 }

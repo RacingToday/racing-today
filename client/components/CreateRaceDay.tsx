@@ -43,19 +43,24 @@ function CreateRaceDay() {
           <ModalBody>
             <FormControl>
               <FormLabel>Event Description</FormLabel>
-              <Textarea onChange={(e) => setEventDescription(e.target.value)}>
+              <Textarea
+                variant={"filled"}
+                placeholder="Please add a description of the event"
+                onChange={(e) => setEventDescription(e.target.value)}
+              >
                 {EventDescription}
               </Textarea>
               <FormLabel>Event Date</FormLabel>
-              <Input type={"date"} />
+              <Input variant={"filled"} type={"date"} />
               <FormLabel>Start Time</FormLabel>
-              <Input type={"time"} />
+              <Input variant={"filled"} type={"time"} />
               <FormLabel>End Time</FormLabel>
-              <Input type={"time"} />
+              <Input variant={"filled"} type={"time"} />
               <FormLabel>Price</FormLabel>
               €
               <Input
-                w={"50%"}
+                w={"auto%"}
+                variant={"filled"}
                 onChange={(e) => setPrice(e.target.value)}
                 value={Price}
               />
@@ -71,10 +76,7 @@ function CreateRaceDay() {
                 </MenuList>
               </Menu>
               <FormLabel>Raceday capacity</FormLabel>
-              <Input
-                placeholder="amount of people that can join example: 20"
-                type={"number"}
-              />
+              <Input w={"auto%"} placeholder="example: 20" type={"number"} />
             </FormControl>
           </ModalBody>
           <ModalFooter></ModalFooter>

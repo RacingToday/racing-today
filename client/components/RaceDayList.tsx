@@ -7,8 +7,9 @@ import React from "react";
 /** @format */
 function RaceDayList() {
   const { loading, error, data } = useQuery(GET_RACEDAYS);
+
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error </p>;
+  if (error) return <p> Error :( </p>;
   const arrayOfRacedays = data.racaDays.data;
   return (
     <>
@@ -59,10 +60,9 @@ const GET_RACEDAYS = gql`
     racaDays {
       data {
         attributes {
-          publishedAt
+          EventDescription
           RaceDate
           EventDescription
-          RaceDayCapacity
           Price
         }
       }

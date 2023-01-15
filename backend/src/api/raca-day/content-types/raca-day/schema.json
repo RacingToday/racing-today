@@ -4,11 +4,11 @@
   "info": {
     "singularName": "raca-day",
     "pluralName": "raca-days",
-    "displayName": "RacaDay",
+    "displayName": "RaceDay",
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -36,17 +36,14 @@
       "target": "api::race-track.race-track",
       "inversedBy": "raca_day"
     },
-    "RaceDayCapacity": {
-      "type": "integer"
+    "OrganizerEmail": {
+      "type": "string"
     },
-    "RaceDayParticipants": {
-      "type": "integer"
-    },
-    "organizer": {
+    "users": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::organizer.organizer",
-      "inversedBy": "raca_day"
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "raca_days"
     }
   }
 }
