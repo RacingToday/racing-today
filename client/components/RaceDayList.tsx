@@ -58,7 +58,7 @@ function RaceDayList() {
 export default RaceDayList;
 const GET_RACEDAYS = gql`
   {
-    racaDays {
+    racaDays(pagination: { start: 0, limit: 30 }) {
       data {
         id
         attributes {

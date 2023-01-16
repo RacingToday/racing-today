@@ -63,8 +63,11 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "RandomString": {
-      "type": "string"
+    "race_days": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::raca-day.raca-day",
+      "mappedBy": "user"
     }
   }
 }
