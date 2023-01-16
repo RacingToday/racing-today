@@ -9,8 +9,9 @@ function RaceDayList() {
   const { loading, error, data } = useQuery(GET_RACEDAYS);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p> Error :( </p>;
+  if (error) return <p> Error </p>;
   const arrayOfRacedays = data.racaDays.data;
+  console.log(arrayOfRacedays);
   return (
     <>
       <h1
@@ -32,7 +33,7 @@ function RaceDayList() {
             m={"0.7em 2em"}
             flex={1}
             border={"1px solid black"}
-            key={raceday.attributes.RaceDate}
+            key={raceday.id}
           >
             <Box textAlign={"center"} alignSelf="center">
               {raceday.attributes.RaceDate}
@@ -59,6 +60,7 @@ const GET_RACEDAYS = gql`
   {
     racaDays {
       data {
+        id
         attributes {
           EventDescription
           RaceDate

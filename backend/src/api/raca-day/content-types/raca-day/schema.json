@@ -33,17 +33,13 @@
     "race_track": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::race-track.race-track",
-      "inversedBy": "raca_day"
+      "target": "api::race-track.race-track"
     },
     "OrganizerEmail": {
       "type": "string"
     },
-    "users": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "raca_days"
+    "Capacity": {
+      "type": "integer"
     }
   }
 }

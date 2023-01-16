@@ -25,12 +25,6 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::raca-day.raca-day"
-    },
-    "raca_day": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::raca-day.raca-day",
-      "mappedBy": "race_track"
     }
   }
 }

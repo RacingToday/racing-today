@@ -65,12 +65,6 @@
     },
     "RandomString": {
       "type": "string"
-    },
-    "raca_days": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::raca-day.raca-day",
-      "mappedBy": "users"
     }
   }
 }

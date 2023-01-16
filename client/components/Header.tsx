@@ -91,6 +91,7 @@ function Header() {
   const handleLogin = async () => {
     const login = await loginUser(loginEmail, loginPassword);
     const { jwt }: any = login;
+
     if (typeof jwt === "string" && jwt.length > 0) {
       localStorage.setItem("jwt", jwt);
       console.log(jwt);
