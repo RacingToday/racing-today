@@ -19,6 +19,7 @@ import {
   TabPanels,
   Text,
   TabPanel,
+  Icon,
   Tab,
   Alert,
   AlertDescription,
@@ -31,8 +32,9 @@ import {
 import { createNewUser, getMyUser, loginUser } from "../lib/helperFunctions";
 import React, { useState } from "react";
 import CreateRaceDay from "./CreateRaceDay";
+import Link from "next/link";
 function Header() {
-  const { isOpen: isOpen, onOpen: onOpen, onClose: onClose } = useDisclosure();
+  const { isOpen: isOpen, onOpen, onClose } = useDisclosure();
 
   const [loginEmail, setLoginEmail] = React.useState("");
   const [loginPassword, setLoginPassword] = React.useState("");
@@ -48,7 +50,6 @@ function Header() {
       Login or Register
     </Button>
   );
-
   React.useEffect(() => {
     const checkForUser = async () => {
       if (localStorage.getItem("jwt") !== null) {
@@ -73,10 +74,11 @@ function Header() {
                 <Button size={"sm"} colorScheme={"blue"}>
                   Find Racedays
                 </Button>
-
-                <Button size={"sm"} colorScheme={"blue"}>
-                  My Racedays
-                </Button>
+                <Link href="myracedays">
+                  <Button size={"sm"} colorScheme={"blue"}>
+                    My Racedays
+                  </Button>
+                </Link>
               </Flex>
             </Flex>
           );
@@ -159,7 +161,6 @@ function Header() {
           />
         </Alert>
       )}
-
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

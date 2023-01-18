@@ -11,7 +11,6 @@ function RaceDayList() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p> Error </p>;
   const arrayOfRacedays = data.racaDays.data;
-  console.log(arrayOfRacedays);
   return (
     <>
       <h1
@@ -43,7 +42,7 @@ function RaceDayList() {
             </Box>
             <Box alignSelf={"center"}>{raceday.attributes.RaceDayCapacity}</Box>
             <Box alignSelf={"center"} textAlign="center">
-              Prices From {raceday.attributes.Price}
+              Prices From €{raceday.attributes.Price}
             </Box>
             <Box alignSelf={"center"}>
               <Button colorScheme={"blue"}>Book</Button>

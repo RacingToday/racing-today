@@ -13,10 +13,7 @@
   "pluginOptions": {},
   "attributes": {
     "EventDescription": {
-      "type": "string"
-    },
-    "Messages": {
-      "type": "string"
+      "type": "text"
     },
     "RaceDate": {
       "type": "date"
@@ -41,11 +38,16 @@
     "Capacity": {
       "type": "integer"
     },
-    "user": {
+    "users": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "inversedBy": "race_days"
+    },
+    "messages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::message.message"
     }
   }
 }

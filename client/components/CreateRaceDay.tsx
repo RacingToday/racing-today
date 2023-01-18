@@ -29,6 +29,13 @@ import {
   PopoverCloseButton,
   PopoverTrigger,
   PopoverFooter,
+  FormHelperText,
+  FormErrorMessage,
+  Alert,
+  AlertIcon,
+  CloseButton,
+  AlertDialogBody,
+  AlertDialogHeader,
 } from "@chakra-ui/react";
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client";
@@ -45,6 +52,8 @@ function CreateRaceDay() {
   const [EndTime, setEndTime] = useState("");
   const [Capacity, setCapacity] = useState("");
   const [trackID, setTrackID] = useState(0);
+  const [isError, setIsError] = useState(false);
+  const [successfullyCreated, setSuccessfullyCreated] = useState(false);
 
   const { loading, error, data } = useQuery(GET_RACETRACKS);
   if (loading) return <p>Loading...</p>;
@@ -59,6 +68,20 @@ function CreateRaceDay() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const isError =
+      Track === "Please Select a Track" ||
+      EventDescription === "" ||
+      Price === "" ||
+      Date === "" ||
+      StartTime === "" ||
+      EndTime === "" ||
+      Capacity === "" ||
+      trackID === 0;
+    if (isError) {
+      setIsError(true);
+      return;
+    }
+
     const startTimeToSend = StartTime + ":00:000";
     const EndTimeToSend = EndTime + ":00:000";
     const jwt = localStorage.getItem("jwt");
@@ -105,8 +128,10 @@ function CreateRaceDay() {
     setEndTime("");
     setCapacity("");
     setTrackID(0);
-    console.log(newRaceDay);
+
+    setSuccessfullyCreated(true);
   };
+
   return (
     <>
       <Button size={"sm"} colorScheme="blue" onClick={onOpen}>
@@ -116,7 +141,41 @@ function CreateRaceDay() {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Create Raceday</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton
+            onClick={() => {
+              setSuccessfullyCreated(false);
+              onClose();
+              setIsError(false);
+            }}
+          />
+          {isError && (
+            <Alert status="error">
+              <CloseButton onClick={() => setIsError(false)} />
+              <AlertIcon />
+              Please make sure you fill out all the fields
+            </Alert>
+          )}
+          {successfullyCreated && (
+            <Alert status="success" variant={"solid"}>
+              <CloseButton onClick={() => setSuccessfullyCreated(false)} />
+              <AlertIcon />
+              Successfully Created Raceday
+              <AlertDialogBody>
+                <Button
+                  colorScheme={"blue"}
+                  onClick={() => {
+                    setSuccessfullyCreated(false);
+                    onClose();
+                  }}
+                >
+                  Close this form
+                </Button>
+                <Button m={"0.4em 1em"} colorScheme={"blue"}>
+                  <Link href={"/racedays"}>Go to my Racedays</Link>
+                </Button>
+              </AlertDialogBody>
+            </Alert>
+          )}
           <ModalBody>
             <form onSubmit={handleSubmit}>
               <FormControl>
@@ -127,6 +186,7 @@ function CreateRaceDay() {
                   onChange={(e) => setEventDescription(e.target.value)}
                   value={EventDescription}
                 />
+
                 <FormLabel>Event Date</FormLabel>
                 <Input
                   value={Date}
@@ -134,6 +194,7 @@ function CreateRaceDay() {
                   type={"date"}
                   onChange={(e) => setDate(e.target.value)}
                 />
+
                 <FormLabel>Start Time</FormLabel>
                 <Input
                   onChange={(e) => setStartTime(e.target.value)}
@@ -141,6 +202,7 @@ function CreateRaceDay() {
                   variant={"filled"}
                   type={"time"}
                 />
+
                 <FormLabel>End Time</FormLabel>
                 <Input
                   value={EndTime}
@@ -183,44 +245,23 @@ function CreateRaceDay() {
                     type={"number"}
                   />
                 </Menu>
-                <Popover>
-                  <PopoverTrigger>
-                    <Button
-                      type="submit"
-                      onClick={(e) => handleSubmit}
-                      colorScheme={"blue"}
-                    >
-                      Submit
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <PopoverHeader
-                      borderTopRadius={"8px"}
-                      bgColor={"green.400"}
-                      w={"500px"}
-                    >
-                      Success!
-                    </PopoverHeader>
-                    <PopoverArrow />
-                    <PopoverCloseButton w={"auto"} />
-                    <PopoverBody
-                      bgColor={"green.200"}
-                      w={"500px"}
-                      borderBottomRadius={"8px"}
-                    >
-                      Your Raceday has been created! You can create more by
-                      filling out the form again.
-                    </PopoverBody>
-                    <PopoverFooter w={"500px"} bgColor={"green.200"}>
-                      <Button onClick={onClose}>Close this form</Button>
-                      <Button m={"0.4em 1em"} colorScheme={"blue"}>
-                        <Link href={"/racedays"}>Go to my Racedays</Link>
-                      </Button>
-                    </PopoverFooter>
-                  </PopoverContent>
-                </Popover>
+                <Button
+                  type="submit"
+                  onClick={(e) => handleSubmit}
+                  colorScheme={"blue"}
+                >
+                  Craete
+                </Button>
 
-                <Button onClick={onClose}>Close</Button>
+                <Button
+                  onClick={() => {
+                    setSuccessfullyCreated(false);
+                    setIsError(false);
+                    onClose();
+                  }}
+                >
+                  Close
+                </Button>
               </FormControl>
             </form>
           </ModalBody>

@@ -19,6 +19,7 @@ export async function createNewUser(
 }
 
 interface User {
+  id: number;
   jwt: string;
   username: string;
 }

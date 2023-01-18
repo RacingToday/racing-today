@@ -65,9 +65,9 @@
     },
     "race_days": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::raca-day.raca-day",
-      "mappedBy": "user"
+      "mappedBy": "users"
     }
   }
 }

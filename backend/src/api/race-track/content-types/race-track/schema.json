@@ -13,7 +13,7 @@
   "pluginOptions": {},
   "attributes": {
     "TrackDescription": {
-      "type": "string"
+      "type": "text"
     },
     "Location": {
       "type": "string"
@@ -25,6 +25,17 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::raca-day.raca-day"
+    },
+    "Images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }
