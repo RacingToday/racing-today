@@ -5,13 +5,69 @@ import React from "react";
 import { getMyUser } from "../lib/helperFunctions";
 import { useState } from "react";
 import { type } from "os";
+import { useQuery } from "@apollo/client";
 
 function Messages() {
-  const [ListOfRaceDays, setListOfRaceDays] = useState([]);
-  const [currentMessage, setCurrentMessage] = useState("");
-  const [arrayOfMessages, setArrayOfMessages] = useState([]);
+  const [ListOfRaceDays, setListOfRaceDays] = useState<any[]>([]);
+  const [currentMessage, setCurrentMessage] = useState<string>("");
+  const [arrayOfMessages, setArrayOfMessages] = useState<any[]>([]);
   const [myEmail, setMyEmail] = useState("");
-  const [messageIndex, setMessageIndex] = useState(0);
+  const [messageIndex, setMessageIndex] = useState<number>(0);
+
+  const sendNewMessage = async (
+    messageIndex: number,
+    currentMessage: string,
+    myEmail: string
+  ) => {
+    interface newMessage {
+      data: {
+        createMessage: {
+          data: {
+            id: number;
+            attributes: {
+              Text: string;
+              Sender: string;
+            };
+          };
+        };
+      };
+    }
+    const newMessage: newMessage = await fetch(
+      "http://localhost:1337/graphql",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+        body: JSON.stringify({
+          query: `mutation {
+          createMessage(data: {
+            Text: "${currentMessage}",
+            Sender: "${myEmail}",
+            race_day: ${messageIndex}
+          }) {
+            data {
+              id
+              attributes {
+                Text
+                Sender
+              }
+            }
+          }
+        }`,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => data);
+    console.log(newMessage);
+    setArrayOfMessages([
+      ...arrayOfMessages,
+      newMessage.data.createMessage.data,
+    ]);
+    setCurrentMessage("");
+  };
 
   const GetMyMessages = async () => {
     if (localStorage.getItem("jwt") !== null) {
@@ -24,17 +80,15 @@ function Messages() {
 
         const user = await getMyUser(jwt);
         setMyEmail(user.username);
-        console.log(user);
-        const myMessages: message = await fetch(
-          "http://localhost:1337/graphql",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${jwt}`,
-            },
-            body: JSON.stringify({
-              query: `{
+
+        const myMessages: any = await fetch("http://localhost:1337/graphql", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
+          body: JSON.stringify({
+            query: `{
                 usersPermissionsUser(id: ${user.id}) {
       data {
         id
@@ -68,9 +122,8 @@ function Messages() {
     }
   }
             `,
-            }),
-          }
-        ).then((res) => res.json());
+          }),
+        }).then((res) => res.json());
         setListOfRaceDays(
           myMessages.data.usersPermissionsUser.data.attributes.race_days.data
         );
@@ -85,28 +138,6 @@ function Messages() {
   React.useEffect(() => {
     GetMyMessages();
   }, []);
-
-  interface messages {
-    id: number;
-    attributes: {
-      RaceDate: string;
-      race_track: {
-        data: {
-          attributes: {
-            TrackName: string;
-          };
-        };
-      };
-      messages: {
-        data: {
-          attributes: {
-            Text: string;
-            Sender: string;
-          };
-        }[];
-      };
-    };
-  }
 
   return (
     <Flex
@@ -130,7 +161,7 @@ function Messages() {
         </h1>
 
         {ListOfRaceDays.length > 0 ? (
-          ListOfRaceDays.map((message: messages) => {
+          ListOfRaceDays.map((message: any) => {
             return (
               <Button
                 mt={1}
@@ -140,7 +171,7 @@ function Messages() {
                 border={"none"}
                 onClick={() => {
                   setArrayOfMessages(message.attributes.messages.data);
-                  console.log(arrayOfMessages);
+                  setMessageIndex(message.id);
                 }}
                 w={"15em"}
                 colorScheme={"blue"}
@@ -172,7 +203,7 @@ function Messages() {
         maxH={"78vh"}
         overflow={"hidden"}
         className="chat"
-        border="1px solid black"
+        border="none"
         borderRadius={"15px"}
         bgColor={"white"}
         flexDir={"column"}
@@ -183,13 +214,15 @@ function Messages() {
           w={"100%"}
           className="chatMessages"
           overflow={"auto"}
+          flex={1}
           flexDir={"column"}
+          borderBottom="1px dotted black"
         >
           {arrayOfMessages.length > 0 ? (
-            arrayOfMessages.map((message) => {
+            arrayOfMessages.map((message: any, index) => {
               return (
                 <Box
-                  key={message.id}
+                  key={index}
                   mt={3}
                   bgColor={"blue.400"}
                   borderRadius={"15px"}
@@ -234,16 +267,17 @@ function Messages() {
           )}
         </Flex>
         <Input
-          mt={4}
+          mt={5}
           placeholder="Type your message here"
           type={"text"}
           id={"message"}
+          size={"lg"}
           w={"90%"}
           value={currentMessage}
           onChange={(e) => setCurrentMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter" && currentMessage.length > 0) {
-              console.log(currentMessage);
+              sendNewMessage(messageIndex, currentMessage, myEmail);
             }
           }}
         />
@@ -253,5 +287,3 @@ function Messages() {
 }
 
 export default Messages;
-
-// attributes, messages, attributes, text, sender
