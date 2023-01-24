@@ -37,11 +37,11 @@ function MyRaceDays() {
           <Tab>My RaceDays</Tab>
           <Tab>Messages</Tab>
         </TabList>
-        <TabPanels>
+        <TabPanels overflow={"clip"} maxH={"100%"}>
           <TabPanel>
             <MyRaceDayComponent />
           </TabPanel>
-          <TabPanel>
+          <TabPanel bgColor={"gray.100"} overflow={"hidden"}>
             <Messages />
           </TabPanel>
         </TabPanels>

@@ -36,6 +36,9 @@
         "videos",
         "audios"
       ]
+    },
+    "LinkForEmbeddingGoogleMaps": {
+      "type": "string"
     }
   }
 }

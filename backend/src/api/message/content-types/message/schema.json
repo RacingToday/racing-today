@@ -4,10 +4,11 @@
   "info": {
     "singularName": "message",
     "pluralName": "messages",
-    "displayName": "Message"
+    "displayName": "Message",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -16,6 +17,12 @@
     },
     "Text": {
       "type": "richtext"
+    },
+    "race_day": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::raca-day.raca-day",
+      "inversedBy": "messages"
     }
   }
 }

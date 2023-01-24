@@ -14,7 +14,6 @@ import {
   ListItem,
   Text,
 } from "@chakra-ui/react";
-import { gql, useQuery } from "@apollo/client";
 import { getMyUser } from "../lib/helperFunctions";
 
 function MyRaceDayComponent() {
@@ -24,7 +23,10 @@ function MyRaceDayComponent() {
     if (localStorage.getItem("jwt") !== null) {
       const jwt = localStorage.getItem("jwt");
       if (typeof jwt === "string" && jwt.length > 0) {
-        const user = await getMyUser(jwt);
+        interface user {
+          id: number;
+        }
+        const user: user = await getMyUser(jwt);
         const myDays = await fetch("http://localhost:1337/graphql", {
           method: "POST",
           headers: {
@@ -33,7 +35,7 @@ function MyRaceDayComponent() {
           },
           body: JSON.stringify({
             query: `{
-    usersPermissionsUser(id: 20) {
+    usersPermissionsUser(id: ${user.id}) {
       data {
         id
         attributes {
@@ -70,10 +72,6 @@ function MyRaceDayComponent() {
         setMyRaceDays(
           myDays.data.usersPermissionsUser.data.attributes.race_days.data
         );
-
-        console.log(
-          myDays.data.usersPermissionsUser.data.attributes.race_days.data
-        );
       }
     }
     return;
@@ -106,14 +104,14 @@ function MyRaceDayComponent() {
 
   return (
     <>
-      <Flex p={"2em 5em"} minW="100vw" minH={"100vh"}>
+      <Flex flex={1} p={"2em 5em"} minW="100vw" maxH={"75vh"}>
         <h1>My Track Days</h1>
         <Accordion minW="90%">
           {MyRaceDays.length > 0 &&
             MyRaceDays.map((raceDay: MyRaceDay) => (
               <AccordionItem border={"1px dotted black"} key={raceDay.id}>
                 <AccordionButton>
-                  <Flex gap="1em" flexDirection={"row"}>
+                  <Flex flex={1} gap="1em" minW={"100%"} flexDirection={"row"}>
                     <h3>
                       Track:{" "}
                       {raceDay.attributes.race_track.data.attributes.TrackName}
@@ -128,12 +126,12 @@ function MyRaceDayComponent() {
                   <AccordionIcon />
                 </AccordionButton>
                 <AccordionPanel minH={"20em"} minW={"100%"}>
-                  <Flex minW={"100%"}>
+                  <Flex flex={1} minW={"100%"}>
                     <Flex
                       flexDir={"column"}
                       borderRight="1px solid black"
                       minH={"25em"}
-                      w={"30%"}
+                      p={"1em 2em"}
                     >
                       <h2>Track Info</h2>
                       <br />
@@ -184,7 +182,7 @@ function MyRaceDayComponent() {
                         </List>
                         <iframe
                           style={{
-                            marginLeft: "10em",
+                            marginLeft: "5em",
                             borderRadius: "10px",
                           }}
                           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11966.87110823999!2d2.1310633420944307!3d41.42364469188054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a497f0b2911c6f%3A0x2c79835d843d7146!2sCamp%20de%20Futbol%20Sant%20Gen%C3%ADs!5e0!3m2!1sen!2ses!4v1674063222656!5m2!1sen!2ses"
