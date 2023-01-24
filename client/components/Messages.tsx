@@ -143,14 +143,19 @@ function Messages() {
     <Flex
       overflow={"hidden"}
       flexDir="row"
+      wordBreak={"break-word"}
+      flex={1}
       bgColor={"gray.100"}
       flexWrap={"wrap"}
     >
       <Flex
-        p={4}
         className="chatSelection"
-        overflow={"hidden"}
+        flex={1}
         flexDir={"column"}
+        wrap={"wrap"}
+        flexBasis={"40%"}
+        alignContent={"flex-start"}
+        alignSelf={"flex-start"}
       >
         <h1
           style={{
@@ -165,7 +170,6 @@ function Messages() {
             return (
               <Button
                 mt={1}
-                size={"lg"}
                 p={1}
                 flex={1}
                 border={"none"}
@@ -173,14 +177,11 @@ function Messages() {
                   setArrayOfMessages(message.attributes.messages.data);
                   setMessageIndex(message.id);
                 }}
-                w={"15em"}
                 colorScheme={"blue"}
                 display={"flex"}
                 justifyContent={"space-between"}
                 flexWrap={"wrap"}
                 fontSize={"1em"}
-                overflow={"hidden"}
-                fontWeight={"bold"}
                 flexDir={"column"}
                 maxH={"4em"}
                 m={"0.5em"}
@@ -198,10 +199,10 @@ function Messages() {
       </Flex>
       <Flex
         padding={3}
-        minH={"78vh"}
-        minW={"75vw"}
-        maxH={"78vh"}
-        overflow={"hidden"}
+        minH={"70vh"}
+        minW={"70vw"}
+        maxH={"70vh"}
+        maxW={"75vw"}
         className="chat"
         border="none"
         borderRadius={"15px"}
@@ -211,23 +212,24 @@ function Messages() {
         justifyContent={"space-between"}
       >
         <Flex
-          w={"100%"}
           className="chatMessages"
           overflow={"auto"}
           flex={1}
+          w={"100%"}
           flexDir={"column"}
           borderBottom="1px dotted black"
+          p={2}
         >
           {arrayOfMessages.length > 0 ? (
             arrayOfMessages.map((message: any, index) => {
               return (
                 <Box
                   key={index}
-                  mt={3}
+                  m={3}
                   bgColor={"blue.400"}
                   borderRadius={"15px"}
                   p={3}
-                  w={"fit-content"}
+                  wordBreak={"break-word"}
                   backgroundColor={
                     message.attributes.Sender === myEmail
                       ? "green.400"
@@ -272,6 +274,7 @@ function Messages() {
           type={"text"}
           id={"message"}
           size={"lg"}
+          position={"relative"}
           w={"90%"}
           value={currentMessage}
           onChange={(e) => setCurrentMessage(e.target.value)}
