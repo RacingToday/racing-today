@@ -8,13 +8,14 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import { getMyUser } from "../lib/helperFunctions";
 import MyRaceDayComponent from "../components/MyRaceDaysComponent";
 import Messages from "../components/Messages";
 
 function MyRaceDays() {
+  const [MyRaceDays, setMyRaceDays] = useState([]);
   React.useEffect(() => {
     const userCheck = async () => {
       if (localStorage.getItem("jwt") !== null) {
@@ -29,9 +30,14 @@ function MyRaceDays() {
     userCheck();
   }, []);
 
+  const props = {
+    MyRaceDays: MyRaceDays,
+    setMyRaceDays: setMyRaceDays,
+  };
+
   return (
     <>
-      <Header />
+      <Header props={props} />
       <Tabs>
         <TabList>
           <Tab>My RaceDays</Tab>
@@ -39,7 +45,7 @@ function MyRaceDays() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <MyRaceDayComponent />
+            <MyRaceDayComponent props={props} />
           </TabPanel>
           <TabPanel flexWrap="wrap" bgColor={"gray.100"}>
             <Messages />

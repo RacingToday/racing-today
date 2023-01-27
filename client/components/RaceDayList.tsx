@@ -8,8 +8,8 @@ import React from "react";
 function RaceDayList() {
   const { loading, error, data } = useQuery(GET_RACEDAYS);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p> Error </p>;
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return <h1> Error </h1>;
   const arrayOfRacedays = data.racaDays.data;
   return (
     <>

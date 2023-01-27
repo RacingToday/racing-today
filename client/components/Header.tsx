@@ -33,7 +33,8 @@ import { createNewUser, getMyUser, loginUser } from "../lib/helperFunctions";
 import React, { useState } from "react";
 import CreateRaceDay from "./CreateRaceDay";
 import Link from "next/link";
-function Header() {
+
+function Header(props: any) {
   const { isOpen: isOpen, onOpen, onClose } = useDisclosure();
 
   const [loginEmail, setLoginEmail] = React.useState("");
@@ -44,19 +45,22 @@ function Header() {
   const [validPasswordError, setValidPasswordError] = React.useState(false);
   const [validAccountCreation, setValidAccountCreation] = React.useState(false);
   const [validLogin, setValidLogin] = React.useState(false);
+  const [userId, setUserId] = React.useState(0);
 
   const [loginOrShowUserData, setLoginOrShowUserData] = React.useState(
     <Button colorScheme="blue" onClick={onOpen}>
       Login or Register
     </Button>
   );
+
   React.useEffect(() => {
+    console.log("useEffect", props);
     const checkForUser = async () => {
       if (localStorage.getItem("jwt") !== null) {
         const jwt = localStorage.getItem("jwt");
         if (typeof jwt === "string" && jwt.length > 0) {
           const user = await getMyUser(jwt);
-
+          setUserId(user.id);
           setLoginOrShowUserData(
             <Flex p={"0.5em 2em"} flex={1} flexWrap={"wrap"} flexDir={"row"}>
               {" "}
@@ -69,7 +73,7 @@ function Header() {
                 flexWrap={"wrap"}
                 flexDir={"row"}
               >
-                <CreateRaceDay />
+                <CreateRaceDay props={props} />
 
                 <Button size={"sm"} colorScheme={"blue"}>
                   Find Racedays
@@ -143,9 +147,11 @@ function Header() {
       bg={"#000"}
     >
       {loginOrShowUserData}
-      <Box className="SiteName" m={"0em 2em"}>
-        <Text fontSize={"2xl"}>RacingToday</Text>
-      </Box>
+      <Link href="/">
+        <Box className="SiteName" m={"0em 2em"}>
+          <Text fontSize={"2xl"}>RacingToday</Text>
+        </Box>
+      </Link>
       {validAccountCreation && (
         <Alert mb={2} variant="solid" status="success">
           <AlertIcon />

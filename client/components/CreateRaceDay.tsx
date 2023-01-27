@@ -39,10 +39,11 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
-function CreateRaceDay() {
+function CreateRaceDay(props: any) {
+  const { MyRaceDays, setMyRaceDays } = props.props;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [EventDescription, setEventDescription] = useState("");
   const [Price, setPrice] = useState("");
@@ -54,6 +55,7 @@ function CreateRaceDay() {
   const [trackID, setTrackID] = useState(0);
   const [isError, setIsError] = useState(false);
   const [successfullyCreated, setSuccessfullyCreated] = useState(false);
+  const [myUserID, setMyUserID] = useState(0);
 
   const { loading, error, data } = useQuery(GET_RACETRACKS);
   if (loading) return <p>Loading...</p>;
@@ -68,6 +70,9 @@ function CreateRaceDay() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(trackID);
+
+    console.log(props.props.props);
     const isError =
       Track === "Please Select a Track" ||
       EventDescription === "" ||
@@ -89,6 +94,7 @@ function CreateRaceDay() {
       return;
     }
     const userAndJWT = await getMyUser(jwt);
+    setMyUserID(userAndJWT.id);
 
     const newRaceDay = await fetch("http://localhost:1337/graphql", {
       method: "POST",
@@ -100,23 +106,37 @@ function CreateRaceDay() {
         query: `mutation {
           createRacaDay(data: {
               EventDescription: "${EventDescription}",
-              Price: ${Price},
+              Price: ${Price}
               RaceDate: "${Date}",
               race_track: ${trackID},
               StartTime: "${startTimeToSend}",
               EndTime: "${EndTimeToSend}",
               OrganizerEmail: "${userAndJWT.username}"
               Capacity: ${Capacity}
+              users: ${userAndJWT.id}
           }) {
             data {
               id
               attributes {
               EventDescription
-              Price
               RaceDate
+              StartTime
+              EndTime
+              Capacity
+              OrganizerEmail
+              race_track {
+                data {
+                  attributes {
+                    TrackName
+                    Location
+                    TrackDescription
+                  }
               }
             }
           }
+        }
+      }
+    
         }`,
       }),
     }).then((res) => res.json());
@@ -128,8 +148,15 @@ function CreateRaceDay() {
     setEndTime("");
     setCapacity("");
     setTrackID(0);
-
     setSuccessfullyCreated(true);
+    console.log(newRaceDay);
+    props.props.props.setMyRaceDays([
+      ...props.props.props.MyRaceDays,
+      newRaceDay.data.attributes.createRacaDay.data.attributes,
+    ]);
+
+    console.log(MyRaceDays);
+    return newRaceDay;
   };
 
   return (
@@ -171,7 +198,7 @@ function CreateRaceDay() {
                   Close this form
                 </Button>
                 <Button m={"0.4em 1em"} colorScheme={"blue"}>
-                  <Link href={"/racedays"}>Go to my Racedays</Link>
+                  <Link href={"/myracedays"}>Go to my Racedays</Link>
                 </Button>
               </AlertDialogBody>
             </Alert>

@@ -18,9 +18,9 @@
     "Text": {
       "type": "richtext"
     },
-    "race_day": {
+    "race_days": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::raca-day.raca-day",
       "inversedBy": "messages"
     }

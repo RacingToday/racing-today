@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { ChatIcon } from "@chakra-ui/icons";
 import {
   Accordion,
   AccordionButton,
@@ -16,9 +15,8 @@ import {
 } from "@chakra-ui/react";
 import { getMyUser } from "../lib/helperFunctions";
 
-function MyRaceDayComponent() {
-  const [MyRaceDays, setMyRaceDays] = useState([]);
-
+function MyRaceDayComponent(props: any) {
+  const { MyRaceDays, setMyRaceDays } = props.props;
   const GetUser = async () => {
     if (localStorage.getItem("jwt") !== null) {
       const jwt = localStorage.getItem("jwt");
@@ -102,15 +100,17 @@ function MyRaceDayComponent() {
     };
   }
 
+  const { TrackName } = MyRaceDays;
+
   return (
     <>
       <Flex flex={1} p={"2em 5em"} minW="100vw" maxH={"75vh"}>
         <h1>My Track Days</h1>
-        <Accordion minW="90%">
+        <Accordion ml={4} minW="90%" allowMultiple>
           {MyRaceDays.length > 0 &&
             MyRaceDays.map((raceDay: MyRaceDay) => (
               <AccordionItem border={"1px dotted black"} key={raceDay.id}>
-                <AccordionButton>
+                <AccordionButton pr={10}>
                   <Flex flex={1} gap="1em" minW={"100%"} flexDirection={"row"}>
                     <h3>
                       Track:{" "}
@@ -146,7 +146,7 @@ function MyRaceDayComponent() {
                     </Flex>
                     <Flex p={"1em 2em"} flexDir={"column"}>
                       <Text pb={"1em"}>
-                        <h2>Event Description</h2>
+                        <h2>Event Description:</h2>
                         <br />
                         {raceDay.attributes.EventDescription}
                       </Text>

@@ -4,8 +4,6 @@ import { Box, Button, Flex, Input } from "@chakra-ui/react";
 import React from "react";
 import { getMyUser } from "../lib/helperFunctions";
 import { useState } from "react";
-import { type } from "os";
-import { useQuery } from "@apollo/client";
 
 function Messages() {
   const [ListOfRaceDays, setListOfRaceDays] = useState<any[]>([]);
@@ -45,7 +43,7 @@ function Messages() {
           createMessage(data: {
             Text: "${currentMessage}",
             Sender: "${myEmail}",
-            race_day: ${messageIndex}
+            race_days: ${messageIndex}
           }) {
             data {
               id
@@ -61,7 +59,6 @@ function Messages() {
     )
       .then((res) => res.json())
       .then((data) => data);
-    console.log(newMessage);
     setArrayOfMessages([
       ...arrayOfMessages,
       newMessage.data.createMessage.data,
@@ -127,9 +124,6 @@ function Messages() {
         setListOfRaceDays(
           myMessages.data.usersPermissionsUser.data.attributes.race_days.data
         );
-        console.log(
-          myMessages.data.usersPermissionsUser.data.attributes.race_days.data
-        );
       }
     }
     return;
@@ -139,6 +133,14 @@ function Messages() {
     GetMyMessages();
   }, []);
 
+  function scrollingView() {
+    throw new Error("Function not implemented.");
+  }
+
+  function scrollToBottom() {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <Flex
       overflow={"hidden"}
@@ -147,15 +149,19 @@ function Messages() {
       flex={1}
       bgColor={"gray.100"}
       flexWrap={"wrap"}
+      wrap={"wrap"}
+      minH={"85vh"}
+      maxH={"85vh"}
     >
       <Flex
         className="chatSelection"
         flex={1}
         flexDir={"column"}
-        wrap={"wrap"}
-        flexBasis={"40%"}
-        alignContent={"flex-start"}
+        flexWrap={"wrap"}
+        // alignContent={"flex-start"}
         alignSelf={"flex-start"}
+        maxW={"20em"}
+        maxH={"25vw"}
       >
         <h1
           style={{
@@ -184,6 +190,7 @@ function Messages() {
                 fontSize={"1em"}
                 flexDir={"column"}
                 maxH={"4em"}
+                maxW={"80%"}
                 m={"0.5em"}
                 key={message.id}
               >
@@ -194,7 +201,7 @@ function Messages() {
             );
           })
         ) : (
-          <h1>No messages</h1>
+          <p>No messages</p>
         )}
       </Flex>
       <Flex

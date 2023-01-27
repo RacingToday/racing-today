@@ -42,13 +42,13 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "race_days"
+      "mappedBy": "race_days"
     },
     "messages": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::message.message",
-      "mappedBy": "race_day"
+      "mappedBy": "race_days"
     }
   }
 }
