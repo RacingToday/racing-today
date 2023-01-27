@@ -13,7 +13,7 @@ import {
   ListItem,
   Text,
 } from "@chakra-ui/react";
-import { getMyUser } from "../lib/helperFunctions";
+import { getMyUser, getMyRaceDays } from "../lib/helperFunctions";
 
 function MyRaceDayComponent(props: any) {
   const { MyRaceDays, setMyRaceDays } = props.props;
@@ -25,48 +25,8 @@ function MyRaceDayComponent(props: any) {
           id: number;
         }
         const user: user = await getMyUser(jwt);
-        const myDays = await fetch("http://localhost:1337/graphql", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-          body: JSON.stringify({
-            query: `{
-    usersPermissionsUser(id: ${user.id}) {
-      data {
-        id
-        attributes {
-          email
-          race_days {
-            data {
-              id
-              attributes {
-                RaceDate
-                StartTime
-                EndTime
-                OrganizerEmail
-                Capacity
-                EventDescription
-                race_track {
-                  data {
-                    attributes {
-                      TrackName
-                      Location
-                      TrackDescription
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-            `,
-          }),
-        }).then((res) => res.json());
+        const myDays = await getMyRaceDays(jwt, user.id);
+
         setMyRaceDays(
           myDays.data.usersPermissionsUser.data.attributes.race_days.data
         );

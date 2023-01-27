@@ -2,7 +2,7 @@
 
 import { Box, Button, Flex, Input } from "@chakra-ui/react";
 import React from "react";
-import { getMyUser } from "../lib/helperFunctions";
+import { getMyUser, fetchMyMessages } from "../lib/helperFunctions";
 import { useState } from "react";
 
 function Messages() {
@@ -56,13 +56,13 @@ function Messages() {
         }`,
         }),
       }
-    )
-      .then((res) => res.json())
-      .then((data) => data);
+    ).then((res) => res.json());
+
     setArrayOfMessages([
       ...arrayOfMessages,
       newMessage.data.createMessage.data,
     ]);
+    GetMyMessages();
     setCurrentMessage("");
   };
 
@@ -78,51 +78,10 @@ function Messages() {
         const user = await getMyUser(jwt);
         setMyEmail(user.username);
 
-        const myMessages: any = await fetch("http://localhost:1337/graphql", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-          body: JSON.stringify({
-            query: `{
-                usersPermissionsUser(id: ${user.id}) {
-      data {
-        id
-        attributes {
-          email
-          race_days {
-            data {
-              id
-              attributes {
-                RaceDate
-                race_track {
-                  data {
-                    attributes {
-                      TrackName
-                    }
-                  }
-                }
-                messages {
-                  data {
-                    attributes {
-                      Text
-                      Sender
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-            `,
-          }),
-        }).then((res) => res.json());
+        const MyMessages = await fetchMyMessages(jwt, user.id);
+
         setListOfRaceDays(
-          myMessages.data.usersPermissionsUser.data.attributes.race_days.data
+          MyMessages.data.usersPermissionsUser.data.attributes.race_days.data
         );
       }
     }
@@ -132,14 +91,6 @@ function Messages() {
   React.useEffect(() => {
     GetMyMessages();
   }, []);
-
-  function scrollingView() {
-    throw new Error("Function not implemented.");
-  }
-
-  function scrollToBottom() {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <Flex

@@ -1,9 +1,11 @@
 /** @format */
-import { getMyUser } from "../lib/helperFunctions";
+import {
+  getMyUser,
+  getMyRaceDays,
+  GET_RACETRACKS,
+} from "../lib/helperFunctions";
 
 import {
-  Flex,
-  Box,
   Button,
   useDisclosure,
   Modal,
@@ -21,29 +23,16 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Popover,
-  PopoverContent,
-  PopoverHeader,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverTrigger,
-  PopoverFooter,
-  FormHelperText,
-  FormErrorMessage,
   Alert,
   AlertIcon,
   CloseButton,
   AlertDialogBody,
-  AlertDialogHeader,
 } from "@chakra-ui/react";
 import { useQuery } from "@apollo/client";
-import { gql } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
 function CreateRaceDay(props: any) {
-  const { MyRaceDays, setMyRaceDays } = props.props;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [EventDescription, setEventDescription] = useState("");
   const [Price, setPrice] = useState("");
@@ -70,9 +59,7 @@ function CreateRaceDay(props: any) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(trackID);
 
-    console.log(props.props.props);
     const isError =
       Track === "Please Select a Track" ||
       EventDescription === "" ||
@@ -149,13 +136,18 @@ function CreateRaceDay(props: any) {
     setCapacity("");
     setTrackID(0);
     setSuccessfullyCreated(true);
-    console.log(newRaceDay);
-    props.props.props.setMyRaceDays([
-      ...props.props.props.MyRaceDays,
-      newRaceDay.data.attributes.createRacaDay.data.attributes,
-    ]);
 
-    console.log(MyRaceDays);
+    if (window.location.href.match("myracedays")) {
+      const jwt = localStorage.getItem("jwt");
+      if (!jwt) {
+        return;
+      }
+
+      const myDays = await getMyRaceDays(jwt, userAndJWT.id);
+      props.props.props.setMyRaceDays(
+        myDays.data.usersPermissionsUser.data.attributes.race_days.data
+      );
+    }
     return newRaceDay;
   };
 
@@ -300,16 +292,3 @@ function CreateRaceDay(props: any) {
 }
 
 export default CreateRaceDay;
-
-const GET_RACETRACKS = gql`
-  {
-    raceTracks {
-      data {
-        id
-        attributes {
-          TrackName
-        }
-      }
-    }
-  }
-`;
