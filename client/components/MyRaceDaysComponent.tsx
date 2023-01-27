@@ -67,21 +67,35 @@ function MyRaceDayComponent(props: any) {
       <Flex flex={1} p={"2em 5em"} minW="100vw" maxH={"75vh"}>
         <h1>My Track Days</h1>
         <Accordion ml={4} minW="90%" allowMultiple>
+          <Flex justifyContent={"space-between"}>
+            <h3>Track</h3>
+            <h3>Date</h3>
+            <h3>Start Time</h3>
+            <h3>End Time</h3>
+          </Flex>
           {MyRaceDays.length > 0 &&
             MyRaceDays.map((raceDay: MyRaceDay) => (
               <AccordionItem border={"1px dotted black"} key={raceDay.id}>
                 <AccordionButton pr={10}>
-                  <Flex flex={1} gap="1em" minW={"100%"} flexDirection={"row"}>
-                    <h3>
-                      Track:{" "}
+                  <Flex
+                    flex={1}
+                    minW={"100%"}
+                    justifyContent={"space-between"}
+                    flexBasis={"auto"}
+                    textAlign={"left"}
+                    justifySelf={"flex-left"}
+                  >
+                    <h3
+                      style={{
+                        textTransform: "uppercase",
+                        fontWeight: "bold",
+                      }}
+                    >
                       {raceDay.attributes.race_track.data.attributes.TrackName}
                     </h3>
-                    <h2>Date: {raceDay.attributes.RaceDate}</h2>
-                    <h3>
-                      Start Time: {raceDay.attributes.StartTime.slice(0, 5)}
-                    </h3>
-                    <h3>End Time: {raceDay.attributes.EndTime.slice(0, 5)}</h3>
-                    <h3>{}</h3>
+                    <h2> {raceDay.attributes.RaceDate}</h2>
+                    <h3>{raceDay.attributes.StartTime.slice(0, 5)}</h3>
+                    <h3> {raceDay.attributes.EndTime.slice(0, 5)}</h3>
                   </Flex>
                   <AccordionIcon />
                 </AccordionButton>

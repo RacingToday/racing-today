@@ -63,7 +63,6 @@ function CreateRaceDay(props: any) {
     const isError =
       Track === "Please Select a Track" ||
       EventDescription === "" ||
-      Price === "" ||
       Date === "" ||
       StartTime === "" ||
       EndTime === "" ||

@@ -108,11 +108,10 @@ function Messages() {
         className="chatSelection"
         flex={1}
         flexDir={"column"}
-        flexWrap={"wrap"}
-        // alignContent={"flex-start"}
         alignSelf={"flex-start"}
+        maxH={"85vh"}
+        overflow={"auto"}
         maxW={"20em"}
-        maxH={"25vw"}
       >
         <h1
           style={{
@@ -127,8 +126,9 @@ function Messages() {
             return (
               <Button
                 mt={1}
-                p={1}
                 flex={1}
+                padding={-3}
+                minH={"fit-content"}
                 border={"none"}
                 onClick={() => {
                   setArrayOfMessages(message.attributes.messages.data);
