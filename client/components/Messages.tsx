@@ -116,6 +116,10 @@ function Messages() {
         <h1
           style={{
             fontSize: "1.5em",
+            fontWeight: "bold",
+            paddingBottom: "0.5em",
+            borderBottom: "1px dotted black",
+            marginBottom: "0.5em",
           }}
         >
           Messages

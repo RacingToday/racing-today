@@ -60,44 +60,105 @@ function MyRaceDayComponent(props: any) {
     };
   }
 
-  const { TrackName } = MyRaceDays;
-
   return (
     <>
-      <Flex flex={1} p={"2em 5em"} minW="100vw" maxH={"75vh"}>
-        <h1>My Track Days</h1>
+      <Flex flex={1} p={"2em 5em"} minW="100vw" wrap={"wrap"} maxH={"75vh"}>
+        <h1
+          style={{
+            fontSize: "2em",
+            marginBottom: "1em",
+          }}
+        >
+          My Track Days
+        </h1>
         <Accordion ml={4} minW="90%" allowMultiple>
-          <Flex justifyContent={"space-between"}>
-            <h3>Track</h3>
-            <h3>Date</h3>
-            <h3>Start Time</h3>
-            <h3>End Time</h3>
+          <Flex mb={3} pl="2%">
+            <h3
+              style={{
+                textTransform: "uppercase",
+                fontWeight: "bold",
+                width: "22%",
+              }}
+            >
+              Track
+            </h3>
+            <h3
+              style={{
+                textTransform: "uppercase",
+                fontWeight: "bold",
+                width: "22%",
+              }}
+            >
+              Date
+            </h3>
+            <h3
+              style={{
+                textTransform: "uppercase",
+                fontWeight: "bold",
+                width: "22%",
+              }}
+            >
+              Start Time
+            </h3>
+            <h3
+              style={{
+                textTransform: "uppercase",
+                fontWeight: "bold",
+                width: "22%",
+              }}
+            >
+              End Time
+            </h3>
           </Flex>
           {MyRaceDays.length > 0 &&
             MyRaceDays.map((raceDay: MyRaceDay) => (
               <AccordionItem border={"1px dotted black"} key={raceDay.id}>
-                <AccordionButton pr={10}>
+                <AccordionButton p={"1em 0em"}>
                   <Flex
                     flex={1}
+                    pl={"2%"}
                     minW={"100%"}
-                    justifyContent={"space-between"}
                     flexBasis={"auto"}
                     textAlign={"left"}
-                    justifySelf={"flex-left"}
+                    justifySelf={"flex-start"}
                   >
                     <h3
                       style={{
                         textTransform: "uppercase",
-                        fontWeight: "bold",
+                        width: "22%",
                       }}
                     >
                       {raceDay.attributes.race_track.data.attributes.TrackName}
                     </h3>
-                    <h2> {raceDay.attributes.RaceDate}</h2>
-                    <h3>{raceDay.attributes.StartTime.slice(0, 5)}</h3>
-                    <h3> {raceDay.attributes.EndTime.slice(0, 5)}</h3>
+                    <h3
+                      style={{
+                        textTransform: "uppercase",
+
+                        width: "22%",
+                      }}
+                    >
+                      {raceDay.attributes.RaceDate}
+                    </h3>
+                    <h3
+                      style={{
+                        textTransform: "uppercase",
+
+                        width: "22%",
+                      }}
+                    >
+                      {raceDay.attributes.StartTime.slice(0, 5)}
+                    </h3>
+                    <h3
+                      style={{
+                        textTransform: "uppercase",
+
+                        width: "22%",
+                      }}
+                    >
+                      {raceDay.attributes.EndTime.slice(0, 5)}
+                    </h3>
+                    <AccordionIcon />
                   </Flex>
-                  <AccordionIcon />
                 </AccordionButton>
                 <AccordionPanel minH={"20em"} minW={"100%"}>
                   <Flex flex={1} minW={"100%"}>
