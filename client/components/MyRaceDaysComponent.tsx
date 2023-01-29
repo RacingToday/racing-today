@@ -112,7 +112,13 @@ function MyRaceDayComponent(props: any) {
           </Flex>
           {MyRaceDays.length > 0 &&
             MyRaceDays.map((raceDay: MyRaceDay) => (
-              <AccordionItem border={"1px dotted black"} key={raceDay.id}>
+              <AccordionItem
+                border={"1px dotted black"}
+                borderRadius="2xl"
+                key={raceDay.id}
+                backgroundColor={"#f5f5f5"}
+                mt={3}
+              >
                 <AccordionButton p={"1em 0em"}>
                   <Flex
                     flex={1}
