@@ -48,13 +48,19 @@ function Header(props: any) {
   const [userId, setUserId] = React.useState(0);
 
   const [loginOrShowUserData, setLoginOrShowUserData] = React.useState(
-    <Button colorScheme="blue" onClick={onOpen}>
-      Login or Register
-    </Button>
+    <Flex gap="5">
+      <Button colorScheme="blue" size={"sm"} onClick={onOpen}>
+        Login or Register
+      </Button>
+      <Link href="about">
+        <Button colorScheme="blue" size="sm">
+          About Us
+        </Button>
+      </Link>
+    </Flex>
   );
 
   React.useEffect(() => {
-    console.log("useEffect", props);
     const checkForUser = async () => {
       if (localStorage.getItem("jwt") !== null) {
         const jwt = localStorage.getItem("jwt");
@@ -78,6 +84,11 @@ function Header(props: any) {
                 <Button size={"sm"} colorScheme={"blue"}>
                   Find Racedays
                 </Button>
+                <Link href="about">
+                  <Button colorScheme="blue" size="sm">
+                    About Us
+                  </Button>
+                </Link>
                 <Link href="myracedays">
                   <Button size={"sm"} colorScheme={"blue"}>
                     My Racedays
@@ -140,6 +151,7 @@ function Header(props: any) {
       pr={"1em"}
       flex={1}
       h={"5rem"}
+      justifyContent={"space-between"}
       flexDir="row-reverse"
       color={"#fff"}
       minW={"100%"}
@@ -286,5 +298,3 @@ function Header(props: any) {
 }
 
 export default Header;
-
-// New GrapthQL query to get create new user

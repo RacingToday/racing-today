@@ -29,9 +29,10 @@ function RaceDayList() {
             flexDir={"row"}
             p={"0em 2.2em"}
             justifyContent={"space-between"}
+            backgroundColor={"#f5f5f5"}
             m={"0.7em 2em"}
             flex={1}
-            border={"1px solid black"}
+            border={"1px dotted black"}
             key={raceday.id}
           >
             <Box textAlign={"center"} alignSelf="center">

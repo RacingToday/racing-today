@@ -1,9 +1,14 @@
 /** @format */
-
+import Header from "../components/Header";
 import React from "react";
+import { Flex } from "@chakra-ui/react";
 
 function aboutus() {
-  return <div>aboutus</div>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 }
 
 export default aboutus;
