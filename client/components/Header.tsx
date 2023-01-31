@@ -79,19 +79,21 @@ function Header(props: any) {
                 flexWrap={"wrap"}
                 flexDir={"row"}
               >
-                <CreateRaceDay props={props} />
-
-                <Button size={"sm"} colorScheme={"blue"}>
-                  Find Racedays
-                </Button>
-                <Link href="about">
-                  <Button colorScheme="blue" size="sm">
-                    About Us
+                <Link href="/">
+                  <Button size={"sm"} colorScheme={"blue"}>
+                    Home
                   </Button>
                 </Link>
+                <CreateRaceDay props={props} />
+
                 <Link href="myracedays">
                   <Button size={"sm"} colorScheme={"blue"}>
                     My Racedays
+                  </Button>
+                </Link>
+                <Link href="about">
+                  <Button colorScheme="blue" size="sm">
+                    About Us
                   </Button>
                 </Link>
               </Flex>

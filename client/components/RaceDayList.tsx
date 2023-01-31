@@ -46,7 +46,7 @@ function RaceDayList() {
               Prices From €{raceday.attributes.Price}
             </Box>
             <Box alignSelf={"center"}>
-              <Button colorScheme={"blue"}>Book</Button>
+              <Button colorScheme={"blue"}>Request To Join</Button>
             </Box>
           </Flex>
         ))}
