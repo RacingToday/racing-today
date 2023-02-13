@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import React from "react";
 import { Flex } from "@chakra-ui/react";
 
-function aboutus() {
+function Terms() {
   return (
     <>
       <Header />
@@ -28,4 +28,4 @@ function aboutus() {
   );
 }
 
-export default aboutus;
+export default Terms;
