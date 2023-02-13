@@ -21,6 +21,7 @@ export async function createNewUser(
 }
 
 interface User {
+  error: any;
   id: number;
   jwt: string;
   username: string;

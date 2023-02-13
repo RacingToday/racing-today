@@ -66,7 +66,16 @@ function Header(props: any) {
         const jwt = localStorage.getItem("jwt");
         if (typeof jwt === "string" && jwt.length > 0) {
           const user = await getMyUser(jwt);
+          if (user.error) {
+            localStorage.removeItem("jwt");
+            if (window.location.pathname === "/myracedays") {
+              window.location.href = "/";
+            }
+            return;
+          }
+
           setUserId(user.id);
+
           setLoginOrShowUserData(
             <Flex p={"0.5em 2em"} flex={1} flexWrap={"wrap"} flexDir={"row"}>
               {" "}
