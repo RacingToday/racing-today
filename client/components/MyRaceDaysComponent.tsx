@@ -1,6 +1,7 @@
 /** @format */
 
 import React, { SetStateAction, useEffect, useState } from "react";
+import { MyRaceDay } from "../lib/types";
 import {
   Accordion,
   AccordionButton,
@@ -8,12 +9,14 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Button,
   Flex,
   List,
   ListItem,
   Text,
 } from "@chakra-ui/react";
 import { getMyUser, getMyRaceDays } from "../lib/helperFunctions";
+import Link from "next/link";
 
 interface Props {
   props: {
@@ -48,27 +51,6 @@ function MyRaceDayComponent(props: Props) {
     };
     GetUser();
   }, []);
-
-  interface MyRaceDay {
-    id: number;
-    attributes: {
-      RaceDate: string;
-      StartTime: string;
-      EndTime: string;
-      EventDescription: string;
-      OrganizerEmail: string;
-      Capacity: number;
-      race_track: {
-        data: {
-          attributes: {
-            TrackName: string;
-            TrackDescription: string;
-            Location: string;
-          };
-        };
-      };
-    };
-  }
 
   return (
     <>
@@ -248,8 +230,29 @@ function MyRaceDayComponent(props: Props) {
               </AccordionItem>
             ))
           ) : (
-            <Flex flex={1} minW={"100%"} justify={"center"} align={"center"}>
-              <h2>You have no track days</h2>
+            <Flex
+              flexDir={"column"}
+              flex={1}
+              minW={"100%"}
+              justify={"center"}
+              align={"center"}
+            >
+              <text
+                style={{
+                  fontSize: "1.5em",
+                  fontWeight: "bold",
+                  marginTop: "2em",
+                  marginBottom: "1em",
+                }}
+              >
+                You have no Racedays, please add one, or join an existing one by
+                going back to the main page
+              </text>
+              <Link href={"/"}>
+                <Button mt={4} colorScheme={"teal"}>
+                  Go Back
+                </Button>
+              </Link>
             </Flex>
           )}
         </Accordion>

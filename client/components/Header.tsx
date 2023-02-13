@@ -29,10 +29,12 @@ import {
   CloseButton,
   Box,
 } from "@chakra-ui/react";
+import { MyRaceDay } from "../lib/types";
 import { createNewUser, getMyUser, loginUser } from "../lib/helperFunctions";
 import React, { useState } from "react";
 import CreateRaceDay from "./CreateRaceDay";
 import Link from "next/link";
+import AuthHeader from "./AuthHeader";
 
 function Header(props: any) {
   const { isOpen: isOpen, onOpen, onClose } = useDisclosure();
@@ -76,38 +78,7 @@ function Header(props: any) {
 
           setUserId(user.id);
 
-          setLoginOrShowUserData(
-            <Flex p={"0.5em 2em"} flex={1} flexWrap={"wrap"} flexDir={"row"}>
-              {" "}
-              <Flex
-                gap={"1em"}
-                justifySelf={"flex-end"}
-                justifyContent={"flex-end"}
-                flex={1}
-                pt={"0.5em"}
-                flexWrap={"wrap"}
-                flexDir={"row"}
-              >
-                <Link href="/">
-                  <Button size={"sm"} colorScheme={"blue"}>
-                    Home
-                  </Button>
-                </Link>
-                <CreateRaceDay props={props} />
-
-                <Link href="myracedays">
-                  <Button size={"sm"} colorScheme={"blue"}>
-                    My Racedays
-                  </Button>
-                </Link>
-                <Link href="about">
-                  <Button colorScheme="blue" size="sm">
-                    About Us
-                  </Button>
-                </Link>
-              </Flex>
-            </Flex>
-          );
+          setLoginOrShowUserData(<AuthHeader props={props} />);
         }
       }
       return;
@@ -122,15 +93,10 @@ function Header(props: any) {
 
     if (typeof jwt === "string" && jwt.length > 0) {
       localStorage.setItem("jwt", jwt);
-      console.log(jwt);
       const user = await getMyUser(jwt);
       setValidLogin(true);
       onClose();
-      setLoginOrShowUserData(
-        <Stack>
-          <Text>Welcome {user.username}</Text>
-        </Stack>
-      );
+      setLoginOrShowUserData(<AuthHeader props={props} />);
       return;
     }
     return;
