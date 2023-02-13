@@ -29,7 +29,7 @@ import {
   AlertDialogBody,
 } from "@chakra-ui/react";
 import { useQuery } from "@apollo/client";
-import React, { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import Link from "next/link";
 
 function CreateRaceDay(props: any) {
