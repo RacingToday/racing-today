@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import {
   Accordion,
   AccordionButton,
@@ -15,27 +15,37 @@ import {
 } from "@chakra-ui/react";
 import { getMyUser, getMyRaceDays } from "../lib/helperFunctions";
 
-function MyRaceDayComponent(props: any) {
-  const { MyRaceDays, setMyRaceDays } = props.props;
-  const GetUser = async () => {
-    if (localStorage.getItem("jwt") !== null) {
-      const jwt = localStorage.getItem("jwt");
-      if (typeof jwt === "string" && jwt.length > 0) {
-        interface user {
-          id: number;
-        }
-        const user: user = await getMyUser(jwt);
-        const myDays = await getMyRaceDays(jwt, user.id);
-
-        setMyRaceDays(
-          myDays.data.usersPermissionsUser.data.attributes.race_days.data
-        );
-      }
-    }
-    return;
+interface Props {
+  props: {
+    MyRaceDays: any;
+    setMyRaceDays: SetStateAction<any>;
   };
+}
 
+// create state props for MyRaceDays and setMyRaceDays
+
+function MyRaceDayComponent(props: Props) {
+  const { MyRaceDays, setMyRaceDays } = props.props;
   useEffect(() => {
+    const GetUser = async () => {
+      console.log(MyRaceDays);
+      if (localStorage.getItem("jwt") !== null) {
+        const jwt = localStorage.getItem("jwt");
+        if (typeof jwt === "string" && jwt.length > 0) {
+          interface user {
+            id: number;
+          }
+          const user: user = await getMyUser(jwt);
+          const myDays = await getMyRaceDays(jwt, user.id);
+          console.log(myDays);
+
+          setMyRaceDays(
+            myDays.data.usersPermissionsUser.data.attributes.race_days.data
+          );
+        }
+      }
+      return;
+    };
     GetUser();
   }, []);
 
@@ -110,7 +120,7 @@ function MyRaceDayComponent(props: any) {
               End Time
             </h3>
           </Flex>
-          {MyRaceDays.length > 0 &&
+          {MyRaceDays.length > 0 ? (
             MyRaceDays.map((raceDay: MyRaceDay) => (
               <AccordionItem
                 border={"1px dotted black"}
@@ -236,7 +246,12 @@ function MyRaceDayComponent(props: any) {
                   </Flex>
                 </AccordionPanel>
               </AccordionItem>
-            ))}
+            ))
+          ) : (
+            <Flex flex={1} minW={"100%"} justify={"center"} align={"center"}>
+              <h2>You have no track days</h2>
+            </Flex>
+          )}
         </Accordion>
       </Flex>
     </>
