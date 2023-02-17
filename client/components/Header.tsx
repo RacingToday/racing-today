@@ -51,12 +51,22 @@ function Header(props: any) {
 
   const [loginOrShowUserData, setLoginOrShowUserData] = React.useState(
     <Flex gap="5">
+      <Link href="/">
+        <Button colorScheme="blue" size="sm">
+          Home
+        </Button>
+      </Link>
       <Button colorScheme="blue" size={"sm"} onClick={onOpen}>
         Login or Register
       </Button>
       <Link href="about">
         <Button colorScheme="blue" size="sm">
           About Us
+        </Button>
+      </Link>
+      <Link href="terms">
+        <Button colorScheme="blue" size="sm">
+          Terms And Conditions
         </Button>
       </Link>
     </Flex>
@@ -115,6 +125,7 @@ function Header(props: any) {
       localStorage.setItem("jwt", jwt);
 
       setValidAccountCreation(true);
+      setLoginOrShowUserData(<AuthHeader props={props} />);
 
       onClose();
     }
@@ -135,14 +146,15 @@ function Header(props: any) {
       maxW={"100%"}
       bg={"#000"}
     >
-      {loginOrShowUserData}
-      <Link href="/">
-        <Box className="SiteName" m={"0em 2em"}>
-          <Text fontSize={"2xl"}>RacingToday</Text>
-        </Box>
-      </Link>
       {validAccountCreation && (
-        <Alert mb={2} variant="solid" status="success">
+        <Alert
+          mb={2}
+          zIndex={100}
+          variant="solid"
+          pos={"absolute"}
+          status="success"
+          top={"5rem"}
+        >
           <AlertIcon />
           <AlertDescription>
             Welcome to RacingToday - you have now created your account and can
@@ -156,6 +168,12 @@ function Header(props: any) {
           />
         </Alert>
       )}
+      {loginOrShowUserData}
+      <Link href="/">
+        <Box className="SiteName" m={"0em 2em"}>
+          <Text fontSize={"2xl"}>RacingToday</Text>
+        </Box>
+      </Link>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

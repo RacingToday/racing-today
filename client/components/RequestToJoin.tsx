@@ -1,5 +1,6 @@
 /** @format */
 import { RaceDay } from "../lib/types";
+import { useEffect, useState } from "react";
 import {
   Button,
   Modal,
@@ -12,9 +13,64 @@ import {
   useDisclosure,
   List,
 } from "@chakra-ui/react";
+import { getMyUser } from "../lib/helperFunctions";
 
 export default function RequestToJoin(raceday: any) {
+  const [myUser, setMyUser] = useState<any>(null);
+  const handleClick = () => {
+    const jwt = localStorage.getItem("jwt");
+
+    setRequestToJoinButton("Your request has been sent!");
+    if (jwt === null) {
+      return;
+    }
+    const sendRequest = async () => {
+      const jwt = localStorage.getItem("jwt");
+      if (jwt === null) {
+        return;
+      }
+      console.log(jwt);
+      const id = myUser.id;
+      console.log(id);
+      const raceDayId: number = raceday.raceDay.id;
+
+      console.log(jwt);
+      const response = await fetch(
+        `http://localhost:1337/api/raca-days/${raceDayId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
+          body: JSON.stringify({
+            data: {
+              users: id,
+            },
+          }),
+        }
+      ).then((res) => res.json());
+      return response;
+    };
+    sendRequest();
+  };
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (!jwt) {
+      return;
+    }
+    const userDetails = async () => {
+      const myUser = await getMyUser(jwt);
+
+      setMyUser(myUser);
+    };
+    userDetails();
+  }, []);
+
   const { isOpen: isOpen, onOpen, onClose } = useDisclosure();
+  const [requestToJoinButton, setRequestToJoinButton] =
+    useState("Confirm Request");
   return (
     <>
       <Button onClick={onOpen} colorScheme={"blue"}>
@@ -46,10 +102,11 @@ export default function RequestToJoin(raceday: any) {
               </li>
               <li>
                 <strong>Start Time:</strong>{" "}
-                {raceday.raceDay.attributes.StartTime}
+                {raceday.raceDay.attributes.StartTime.slice(0, 5)}
               </li>
               <li>
-                <strong>End Time:</strong> {raceday.raceDay.attributes.EndTime}
+                <strong>End Time:</strong>{" "}
+                {raceday.raceDay.attributes.EndTime.slice(0, 5)}
               </li>
               <li>
                 <strong>Capacity:</strong> {raceday.raceDay.attributes.Capacity}
@@ -58,8 +115,8 @@ export default function RequestToJoin(raceday: any) {
                 <strong>Price:</strong> {raceday.raceDay.attributes.Price}
               </li>
             </List>
-            <Button mt={4} colorScheme={"blue"}>
-              Confirm Request
+            <Button onClick={handleClick} mt={4} colorScheme={"blue"}>
+              {requestToJoinButton}
             </Button>
             <Button mt={4} ml={4} onClick={onClose} colorScheme={"red"}>
               Cancel
