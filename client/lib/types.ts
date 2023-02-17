@@ -20,3 +20,24 @@ export interface MyRaceDay {
     };
   };
 }
+
+export interface RaceDay {
+  id: number;
+  attributes: {
+    EventDescription: string;
+    RaceDate: string;
+    StartTime: string;
+    EndTime: string;
+    Capacity: number;
+    Price: number;
+    race_track: {
+      data: {
+        attributes: {
+          TrackDescription: string;
+          TrackName: string;
+          Location: string;
+        };
+      };
+    };
+  };
+}

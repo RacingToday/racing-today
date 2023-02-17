@@ -3,6 +3,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { Box, Button, Flex, List, ListItem } from "@chakra-ui/react";
 import React from "react";
+import RequestToJoin from "./RequestToJoin";
 
 /** @format */
 function RaceDayList() {
@@ -46,7 +47,7 @@ function RaceDayList() {
               Prices From €{raceday.attributes.Price}
             </Box>
             <Box alignSelf={"center"}>
-              <Button colorScheme={"blue"}>Request To Join</Button>
+              <RequestToJoin raceDay={raceday} />
             </Box>
           </Flex>
         ))}
@@ -64,8 +65,20 @@ const GET_RACEDAYS = gql`
         attributes {
           EventDescription
           RaceDate
-          EventDescription
           Price
+          StartTime
+          EndTime
+          Capacity
+          Price
+          race_track {
+            data {
+              attributes {
+                TrackDescription
+                TrackName
+                Location
+              }
+            }
+          }
         }
       }
     }

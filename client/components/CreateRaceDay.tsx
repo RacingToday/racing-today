@@ -29,7 +29,7 @@ import {
   AlertDialogBody,
 } from "@chakra-ui/react";
 import { useQuery } from "@apollo/client";
-import React, { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import Link from "next/link";
 
 function CreateRaceDay(props: any) {
@@ -254,24 +254,28 @@ function CreateRaceDay(props: any) {
                       )
                     )}
                   </MenuList>
-                  <FormLabel>Raceday capacity</FormLabel>
+                  <FormLabel m={"1em 0em"}>Raceday capacity</FormLabel>
                   <Input
                     value={Capacity}
                     onChange={(e) => setCapacity(e.target.value)}
                     w={"auto%"}
                     placeholder="example: 20"
                     type={"number"}
+                    mb={"1em"}
                   />
                 </Menu>
+                <br />
                 <Button
                   type="submit"
-                  onClick={(e) => handleSubmit}
+                  onSubmit={(e) => handleSubmit}
                   colorScheme={"blue"}
                 >
                   Craete
                 </Button>
 
                 <Button
+                  m={"0.4em 1em"}
+                  colorScheme={"red"}
                   onClick={() => {
                     setSuccessfullyCreated(false);
                     setIsError(false);

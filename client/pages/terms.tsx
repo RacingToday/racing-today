@@ -14,7 +14,7 @@ function Terms() {
             marginBottom: "1em",
           }}
         >
-          About Us
+          Terms and Conditions
         </h1>
         <p>
           RacingToday is a community by drivers, created for drivers. We are
@@ -22,6 +22,13 @@ function Terms() {
           drivers, and to provide a place for drivers to share their experiences
           and knowledge with other drivers. We are a community of drivers, for
           drivers.
+        </p>
+        <br />
+        <br />
+        <p>
+          We are committed to providing a safe and secure environment for our
+          members. We will not tolerate any form of harassment or abuse, and we
+          will take appropriate action to protect our members from harm.
         </p>
       </Flex>
     </>
