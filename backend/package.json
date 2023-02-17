@@ -17,7 +17,8 @@
     "@strapi/plugin-users-permissions": "4.5.5",
     "@strapi/strapi": "4.5.5",
     "better-sqlite3": "7.4.6",
-    "sendmail": "^1.6.1"
+    "sendmail": "^1.6.1",
+    "strapi-plugin-vercel-deploy": "^1.4.0"
   },
   "author": {
     "name": "Kristian Gosvig"
