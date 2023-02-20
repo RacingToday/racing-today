@@ -14,9 +14,9 @@ Route (pages)                              Size     First Load JS
 ┌ ○ /                                      3.06 kB         248 kB
 ├   /_app                                  0 B             198 kB
 ├ ○ /404                                   182 B           198 kB
-├ ○ /about                                 965 B           246 kB
+├ ○ /about (492 ms)                        965 B           246 kB
 ├ λ /api/hello                             0 B             198 kB
-├ ○ /myracedays (541 ms)                   5.69 kB         250 kB
+├ ○ /myracedays                            5.69 kB         250 kB
 └ ○ /terms                                 623 B           245 kB
 + First Load JS shared by all              199 kB
   ├ chunks/framework-718a634b4c4ec1cb.js   2.87 kB
