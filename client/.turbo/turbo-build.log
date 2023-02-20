@@ -1,0 +1,30 @@
+$ next build
+info  - Linting and checking validity of types...
+info  - Creating an optimized production build...
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/6)
+info  - Generating static pages (1/6)
+info  - Generating static pages (2/6)
+info  - Generating static pages (4/6)
+info  - Generating static pages (6/6)
+info  - Finalizing page optimization...
+
+Route (pages)                              Size     First Load JS
+┌ ○ / (1918 ms)                            3.06 kB         248 kB
+├   /_app                                  0 B             198 kB
+├ ○ /404                                   182 B           198 kB
+├ ○ /about (444 ms)                        965 B           246 kB
+├ λ /api/hello                             0 B             198 kB
+├ ○ /myracedays (434 ms)                   5.69 kB         250 kB
+└ ○ /terms (327 ms)                        623 B           245 kB
++ First Load JS shared by all              199 kB
+  ├ chunks/framework-718a634b4c4ec1cb.js   2.87 kB
+  ├ chunks/main-7ebfe6a18a7c6c30.js        69.5 kB
+  ├ chunks/pages/_app-f38ce52712a64879.js  125 kB
+  ├ chunks/webpack-7e0a04d6d1a844f2.js     1.04 kB
+  └ css/876d048b5dab7c28.css               706 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+
