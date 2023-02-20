@@ -33,12 +33,12 @@ function aboutus() {
           With years of experience in the racing industry, we understand the
           unique challenges that racers face, and we are committed to providing
           them with the best possible solutions to help them succeed. Whether
-          you're a professional racer or just starting out, we have the tools,
+          you are a professional racer or just starting out, we have the tools,
           resources, and expertise to help you achieve your goals.
         </Text>
         <p>
           At RacingToday APS, we believe that technology should make your life
-          easier, not more complicated. That's why we strive to provide
+          easier, not more complicated. That is why we strive to provide
           user-friendly solutions that are simple to use and deliver real
           results.
         </p>

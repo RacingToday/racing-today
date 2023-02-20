@@ -1,0 +1,17 @@
+{
+  "workspaces": [
+    "client",
+    "backend"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev"
+  },
+  "private": true,
+  "name": "racingToday",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:gosvig123/racing-today.git",
+  "author": "gosvig123 <109414278+gosvig123@users.noreply.github.com>",
+  "license": "MIT"
+}

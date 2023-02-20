@@ -50,7 +50,7 @@ function MyRaceDayComponent(props: Props) {
       return;
     };
     GetUser();
-  }, []);
+  }, [MyRaceDays, setMyRaceDays]);
 
   return (
     <>
